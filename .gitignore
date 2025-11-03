@@ -11,6 +11,7 @@
 Icon
 
 # SQLite files
+*.sqlite
 jogo.sqlite
 
 # Thumbnails
