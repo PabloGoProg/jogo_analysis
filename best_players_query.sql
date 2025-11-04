@@ -67,7 +67,7 @@ position_frequency AS (
     GROUP BY player_api_id, position
 ),
 
--- Paso 5: Clasificar jugadores en roles detallados
+-- Paso 4: Clasificar jugadores en roles detallados
 player_role AS (
     SELECT 
         pf.player_api_id,
@@ -77,7 +77,7 @@ player_role AS (
     WHERE pf.rank = 1
 ),
 
--- Paso 6: Obtener liga actual del jugador (partido más reciente)
+-- Paso 5: Obtener liga actual del jugador (partido más reciente)
 player_recent_match AS (
     SELECT player_api_id, league_id, date,
            ROW_NUMBER() OVER (PARTITION BY player_api_id ORDER BY date DESC) as match_rank
@@ -117,7 +117,7 @@ player_league AS (
 ),
 
 
--- Paso 8: Consolidar datos de jugadores
+-- Paso 6: Consolidar datos de jugadores
 player_full_data AS (
     SELECT 
         p.player_api_id,
@@ -173,7 +173,7 @@ player_full_data AS (
     WHERE pr.role IN ('Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Sider')
 ),
 
--- Paso 9: Calcular puntajes ponderados
+-- Paso 7: Calcular puntajes ponderados
 player_scores AS (
     SELECT 
         player_api_id,
@@ -269,7 +269,7 @@ player_scores AS (
     FROM player_full_data
 ),
 
--- Paso 10: Calcular puntaje final y clasificar por edad
+-- Paso 8: Calcular puntaje final y clasificar por edad
 final_scores AS (
     SELECT 
         player_api_id,
@@ -300,7 +300,7 @@ final_scores AS (
     FROM player_scores
 ),
 
--- Paso 11: Rankear jugadores por rol y edad
+-- Paso 9: Rankear jugadores por rol y edad
 ranked_players AS (
     SELECT 
         role as Rol,
